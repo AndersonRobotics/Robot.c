@@ -5,7 +5,9 @@
 #include <flipper.h>
 #include <robot.h>
 
-int main () {
-  Robot* robot = init_robot();
-  return 0;
+Robot* init_robot () {
+  return &(Robot) {
+    .chassis = init_chassis(),
+    .flipper = init_flipper()
+  };
 }

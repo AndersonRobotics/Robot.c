@@ -24,6 +24,9 @@ struct AnalogLine {
 static struct DigitalChip* digital_chip;
 static struct AnalogChip* analog_chip;
 
+struct DigitalChip* init_digital ();
+struct AnalogChip* init_analog ();
+
 struct DigitalChip* digital ();
 struct AnalogChip* analog ();
 

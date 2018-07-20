@@ -55,22 +55,28 @@ void remove_analog (AnalogChip* chip, int line) {
 
 
 void set_low (DigitalLine* line) {
+  fprintf(line->value_handle, "0");
 }
 
 void set_high (DigitalLine* line) {
+  fprintf(line->value_handle, "1");
 }
 
 void set_input (DigitalLine* line) {
+  fprintf(line->direc_handle, "in");
 }
 
 void set_output (DigitalLine* line) {
+  fprintf(line->direc_handle, "out");
 }
 
 
 void set_duty (AnalogLine* line, int ns) {
+  fprintf(line->dCycle_handle, "%d", ns);
 }
 
 void set_period (AnalogLine* line, int ns) {
+  fprintf(line->period_handle, "%d", ns);
 }
 
 

@@ -1,17 +1,17 @@
 #include <stdio.h>
-#include <gpio.h>
+#include "../include/gpio.h"
 
 DigitalChip* init_digital () {
   return &(DigitalChip) {
-    .export_handle = fopen("/sys/class/gpio/export", O_WRONLY),
-    .remove_handle = fopen("/sys/class/gpio/unexport", O_WRONLY)
+    .export_handle = fopen("/sys/class/gpio/export", "w"),
+    .remove_handle = fopen("/sys/class/gpio/unexport", "w")
   };
 }
 
 AnalogChip* init_analog () {
   return &(AnalogChip) {
-    .export_handle = fopen("/sys/class/pwm/pwmchip0/export", O_WRONLY),
-    .remove_handle = fopen("/sys/class/pwm/pwmchip0/unexport", O_WRONLY)
+    .export_handle = fopen("/sys/class/pwm/pwmchip0/export", "w"),
+    .remove_handle = fopen("/sys/class/pwm/pwmchip0/unexport", "w")
   };
 }
 
@@ -25,8 +25,8 @@ DigitalLine* export_digital (DigitalChip* chip, int line) {
   snprintf(direc_path, 35, "/sys/class/gpio/gpio%d/direction", line);
 
   return &(DigitalLine) {
-    .value_handle = fopen(value_path, O_WRONLY),
-    .direc_handle = fopen(direc_path, O_WRONLY)
+    .value_handle = fopen(value_path, "w"),
+    .direc_handle = fopen(direc_path, "w")
   };
 }
 
@@ -39,8 +39,8 @@ AnalogLine* export_analog (AnalogChip* chip, int line) {
   snprintf(dCycle_path, 45, "/sys/class/pwm/pwmchip0/pwm%d/duty_cycle", line);
 
   return &(AnalogLine) {
-    .period_handle = fopen(period_path, O_WRONLY),
-    .dCycle_handle = fopen(dCycle_path, O_WRONLY)
+    .period_handle = fopen(period_path, "w"),
+    .dCycle_handle = fopen(dCycle_path, "w")
   };
 }
 
@@ -67,12 +67,22 @@ void set_output (DigitalLine* line) {
 }
 
 
-void set_duty (AnalogLine* line) {
+void set_duty (AnalogLine* line, int ns) {
 }
 
-void set_period (AnalogLine* line) {
+void set_period (AnalogLine* line, int ns) {
 }
 
 
-DigitalChip* digitalChip = init_digital();
-AnalogChip* analogChip = init_analog();
+static DigitalChip* digital_chip;
+static AnalogChip* analog_chip;
+
+DigitalChip* digital () {
+  if (digital_chip == NULL) digital_chip = init_digital();
+  return digital_chip;
+}
+
+AnalogChip* analog () {
+  if (analog_chip == NULL) analog_chip = init_analog();
+  return analog_chip;
+}

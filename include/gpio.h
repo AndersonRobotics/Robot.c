@@ -21,11 +21,17 @@ struct AnalogLine {
 };
 
 
+static struct DigitalChip* digital_chip;
+static struct AnalogChip* analog_chip;
+
+struct DigitalChip* digital ();
+struct AnalogChip* analog ();
+
 struct DigitalLine* export_digital (struct DigitalChip*, int);
 struct AnalogLine* export_analog (struct AnalogChip*, int);
 
-void remove_digital (int);
-void remove_analog (int);
+void remove_digital (struct DigitalChip*, int);
+void remove_analog (struct AnalogChip*, int);
 
 void set_high (struct DigitalLine*);
 void set_low (struct DigitalLine*);
@@ -34,10 +40,6 @@ void set_output (struct DigitalLine*);
 
 void set_duty (struct AnalogLine*, int);
 void set_period (struct AnalogLine*, int);
-
-
-struct DigitalChip* digitalChip;
-struct AnalogChip* analogChip;
 
 
 typedef struct DigitalChip DigitalChip;

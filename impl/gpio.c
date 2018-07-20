@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "../include/gpio.h"
+#include <gpio.h>
 
 DigitalChip* init_digital () {
   return &(DigitalChip) {

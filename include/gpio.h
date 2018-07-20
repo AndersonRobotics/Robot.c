@@ -12,7 +12,7 @@ struct AnalogChip {
 
 struct DigitalLine {
   FILE* value_handle;
-  FILE* direc_handle; 
+  FILE* direc_handle;
 };
 
 struct AnalogLine {
